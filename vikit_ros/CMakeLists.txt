@@ -6,6 +6,9 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 # Find packages
+if("$ENV{ROS_DISTRO}" STREQUAL "foxy")
+  set(OpenCV_DIR "/usr/lib/x86_64-linux-gnu/cmake/opencv4" CACHE PATH "" FORCE)
+endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(vikit_common REQUIRED)

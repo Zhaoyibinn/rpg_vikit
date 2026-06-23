@@ -27,6 +27,9 @@ ENDIF()
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -O3 -fsee -fomit-frame-pointer -fno-signed-zeros -fno-math-errno -funroll-loops")
 
 # Add plain cmake packages 
+IF("$ENV{ROS_DISTRO}" STREQUAL "foxy")
+  SET(OpenCV_DIR "/usr/lib/x86_64-linux-gnu/cmake/opencv4" CACHE PATH "" FORCE)
+ENDIF()
 FIND_PACKAGE(ament_cmake REQUIRED)
 FIND_PACKAGE(OpenCV REQUIRED core calib3d features2d highgui imgproc)
 FIND_PACKAGE(Sophus REQUIRED)
@@ -55,7 +58,8 @@ TARGET_LINK_LIBRARIES(${PROJECT_NAME}
   opencv_highgui
   opencv_imgproc
   Sophus::Sophus
-  fmt::fmt)
+  # fmt::fmt)
+  fmt::fmt-header-only)
 TARGET_INCLUDE_DIRECTORIES(${PROJECT_NAME} PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
   "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>"
